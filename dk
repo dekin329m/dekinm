@@ -1,0 +1,71 @@
+--abaixo estara a lib da nosssa UI
+
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/7yhx/kwargs_Ui_Library/main/source.lua"))()
+
+local UI = Lib:Create{
+    Theme = "Dark", -- or any other theme
+    Size = UDim2.new(0, 555, 0, 400) -- default
+ }
+ 
+ local Main = UI:Tab{
+    Name = "inicio"
+ }
+ 
+ local Divider = Main:Divider{
+    Name = "inicio shit"
+ }
+ 
+ local QuitDivider = Main:Divider{
+    Name = "sair"
+ }
+
+ local Players = game:GetService("Players")
+ local LocalPlayer = Players.LocalPlayer
+ 
+ --//Variáveis para bateria infinita
+ local InfiniteBattery = true
+ local BatteryValue = 100
+ 
+ --//Variáveis para permissão no Alien X
+ local AlienXPermission = true
+ 
+ --//Função para atualizar a bateria
+ local function UpdateBattery()
+     if InfiniteBattery then
+         LocalPlayer.Character.Humanoid.MaxHealth = math.huge
+         LocalPlayer.Character.Humanoid.Health = math.huge
+     else
+         LocalPlayer.Character.Humanoid.MaxHealth = 100
+         LocalPlayer.Character.Humanoid.Health = BatteryValue
+     end
+ end
+ 
+ --//Função para atualizar a permissão no Alien X
+ local function UpdateAlienXPermission()
+     if AlienXPermission then
+         LocalPlayer.Character.AlienX.Disabled = false
+     else
+         LocalPlayer.Character.AlienX.Disabled = true
+     end
+ end
+ 
+ --//Função para ativar e desativar o script
+ local function ToggleScript()
+     InfiniteBattery = not InfiniteBattery
+     AlienXPermission = not AlienXPermission
+     UpdateBattery()
+     UpdateAlienXPermission()
+ end
+ 
+ --//Conecta a função ToggleScript à tecla "P"
+ game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
+     if input.KeyCode == Enum.KeyCode.P then
+         ToggleScript()
+     end
+ end)
+ 
+ --//Chama as funções UpdateBattery e UpdateAlienXPermission
+ UpdateBattery()
+ UpdateAlienXPermission()
+ 
+ 
